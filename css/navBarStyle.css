@@ -11,16 +11,32 @@ body {
   z-index: 1000;
   display: flex;
   justify-content: space-around;
+  padding-top: 10px;
   padding-bottom: 10px;
   background-color: white;
+  align-items: center;
 }
 
 .icons{
-  max-height: 25px;
-  width: 45px;
+  max-height: 20px;
+  width: auto;
+  filter: invert(47%) sepia(28%) saturate(942%) hue-rotate(75deg) brightness(96%) contrast(89%);
 }
 
-button{
+.barra-inferior button{
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
   border: none;
+  cursor: pointer;
+  background-color: #F3F7F1;
 }
+
+.barra-inferior button:hover{
+  background-color: #E5F0E2;
+}
+
+/* img{
+  filter: grayscale(100%) brightness(50%);
+} */
 

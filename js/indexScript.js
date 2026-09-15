@@ -1,3 +1,17 @@
+async function carregarJson() {
+  try {
+    const resposta = await fetch('../json/produtos.json');
+    if (!resposta.ok) throw new Error('Erro ao carregar o JSON');
+    
+    const dados = await resposta.json();
+    return dados; // Aqui você retorna os dados do JSON
+    
+  } catch (erro) {
+    console.error('Erro:', erro);
+    return []; // Retorna um array vazio se der erro
+  }
+}
+
 const products = [
   {
     name: "Tênis Runner Pro",
@@ -67,7 +81,15 @@ function fmt(value) {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
+async function testes(){
+
+  const teste = await carregarJson();
+  console.log(teste);
+}
+
 function renderFilters() {
+
+
   filtersEl.innerHTML = cats.map(c =>
     `<button class="chip${c === active ? " active" : ""}" data-cat="${c}">${c}</button>`
   ).join("");
@@ -107,8 +129,6 @@ function renderGrid() {
               <p class="name">${p.name}</p>
               <div class="price-row">
                 <span class="price">${fmt(p.price)}</span>
-                ${p.old ? `<span class="old-price">${fmt(p.old)}</span>` : ""}
-                ${badgeHtml}
               </div>
             </div>
           </div>
@@ -116,5 +136,7 @@ function renderGrid() {
   }).join("");
 }
 
+testes();
 renderFilters();
 renderGrid();
+carregarJson();
