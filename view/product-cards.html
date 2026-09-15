@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo de produtos</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f5f5f3;
+      color: #1a1a18;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Filtros */
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      font-size: 13px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid #d0cec7;
+      background: transparent;
+      color: #555;
+      cursor: pointer;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+
+    .chip:hover { border-color: #999; color: #1a1a18; }
+
+    .chip.active {
+      background: #1a1a18;
+      color: #fff;
+      border-color: #1a1a18;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border: 1px solid #e8e6e0;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .15s, transform .15s;
+    }
+
+    .card:hover {
+      border-color: #b0aea8;
+      transform: translateY(-2px);
+    }
+
+    .img-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #f0ede8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .3s;
+    }
+
+    .card:hover .img-wrap img { transform: scale(1.04); }
+
+    .info { padding: 12px 14px 14px; }
+
+    .cat {
+      font-size: 11px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 4px;
+    }
+
+    .name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a18;
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .price {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1a1a18;
+    }
+
+    .old-price {
+      font-size: 12px;
+      color: #aaa;
+      text-decoration: line-through;
+    }
+
+    /* Badges */
+    .badge {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .badge.sale { background: #fde8e8; color: #b91c1c; }
+    .badge.new  { background: #dcfce7; color: #15803d; }
+
+    /* Empty */
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: #aaa;
+      font-size: 14px;
+      padding: 3rem 0;
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+      body { background: #111110; color: #e8e6e0; }
+      .card { background: #1c1c1a; border-color: #2e2e2c; }
+      .card:hover { border-color: #555; }
+      .img-wrap { background: #252523; }
+      .name { color: #e8e6e0; }
+      .chip { border-color: #3a3a38; color: #aaa; }
+      .chip:hover { border-color: #666; color: #e8e6e0; }
+      .chip.active { background: #e8e6e0; color: #111; border-color: #e8e6e0; }
+    }
+
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Produtos</h1>
+    <div class="filter-row" id="filters"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <script>
+    const products = [
+      {
+        name: "Tênis Runner Pro",
+        cat: "Calçados",
+        price: 289.90,
+        old: 349.90,
+        badge: "sale",
+        img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80"
+      },
+      {
+        name: "Mochila Urban 20L",
+        cat: "Acessórios",
+        price: 159.00,
+        badge: "new",
+        img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80"
+      },
+      {
+        name: "Câmera Instant Mini",
+        cat: "Eletrônicos",
+        price: 449.00,
+        img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80"
+      },
+      {
+        name: "Relógio Clássico",
+        cat: "Acessórios",
+        price: 320.00,
+        old: 400.00,
+        badge: "sale",
+        img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80"
+      },
+      {
+        name: "Fone BT Studio",
+        cat: "Eletrônicos",
+        price: 199.90,
+        badge: "new",
+        img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80"
+      },
+      {
+        name: "Jaqueta Windbreaker",
+        cat: "Roupas",
+        price: 259.00,
+        img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80"
+      },
+      {
+        name: "Garrafa Térmica",
+        cat: "Acessórios",
+        price: 89.90,
+        img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&q=80"
+      },
+      {
+        name: "Óculos Polarizado",
+        cat: "Acessórios",
+        price: 175.00,
+        old: 220.00,
+        badge: "sale",
+        img: "https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&q=80"
+      },
+    ];
+
+    const cats = ["Todos", ...new Set(products.map(p => p.cat))];
+    let active = "Todos";
+
+    const filtersEl = document.getElementById("filters");
+    const gridEl = document.getElementById("grid");
+
+    function fmt(value) {
+      return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    }
+
+    function renderFilters() {
+      filtersEl.innerHTML = cats.map(c =>
+        `<button class="chip${c === active ? " active" : ""}" data-cat="${c}">${c}</button>`
+      ).join("");
+
+      filtersEl.querySelectorAll(".chip").forEach(btn => {
+        btn.addEventListener("click", () => {
+          active = btn.dataset.cat;
+          renderFilters();
+          renderGrid();
+        });
+      });
+    }
+
+    function renderGrid() {
+      const list = active === "Todos" ? products : products.filter(p => p.cat === active);
+
+      if (!list.length) {
+        gridEl.innerHTML = `<div class="empty">Nenhum produto encontrado.</div>`;
+        return;
+      }
+
+      gridEl.innerHTML = list.map(p => {
+        const discount = p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+        const badgeHtml = p.badge === "sale"
+          ? `<span class="badge sale">-${discount}%</span>`
+          : p.badge === "new"
+          ? `<span class="badge new">Novo</span>`
+          : "";
+
+        return `
+          <div class="card">
+            <div class="img-wrap">
+              <img src="${p.img}" alt="${p.name}" loading="lazy" />
+            </div>
+            <div class="info">
+              <p class="cat">${p.cat}</p>
+              <p class="name">${p.name}</p>
+              <div class="price-row">
+                <span class="price">${fmt(p.price)}</span>
+                ${p.old ? `<span class="old-price">${fmt(p.old)}</span>` : ""}
+                ${badgeHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    renderFilters();
+    renderGrid();
+  </script>
+</body>
+</html>
