@@ -1,6 +1,6 @@
 async function carregarJson() {
   try {
-    const resposta = await fetch('/json/produtos.json');
+    const resposta = await fetch('json/produtos.json');
     if (!resposta.ok) throw new Error('Erro ao carregar o JSON');
 
     const dados = await resposta.json();
