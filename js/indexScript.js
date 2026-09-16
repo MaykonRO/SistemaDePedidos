@@ -2,133 +2,65 @@ async function carregarJson() {
   try {
     const resposta = await fetch('../json/produtos.json');
     if (!resposta.ok) throw new Error('Erro ao carregar o JSON');
-    
+
     const dados = await resposta.json();
     return dados; // Aqui você retorna os dados do JSON
-    
+
   } catch (erro) {
     console.error('Erro:', erro);
     return []; // Retorna um array vazio se der erro
   }
 }
 
-const products = [
-  {
-    name: "Tênis Runner Pro",
-    cat: "Calçados",
-    price: 289.90,
-    old: 349.90,
-    badge: "sale",
-    img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80"
-  },
-  {
-    name: "Mochila Urban 20L",
-    cat: "Acessórios",
-    price: 159.00,
-    badge: "new",
-    img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80"
-  },
-  {
-    name: "Câmera Instant Mini",
-    cat: "Eletrônicos",
-    price: 449.00,
-    img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80"
-  },
-  {
-    name: "Relógio Clássico",
-    cat: "Acessórios",
-    price: 320.00,
-    old: 400.00,
-    badge: "sale",
-    img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80"
-  },
-  {
-    name: "Fone BT Studio",
-    cat: "Eletrônicos",
-    price: 199.90,
-    badge: "new",
-    img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80"
-  },
-  {
-    name: "Jaqueta Windbreaker",
-    cat: "Roupas",
-    price: 259.00,
-    img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80"
-  },
-  {
-    name: "Garrafa Térmica",
-    cat: "Acessórios",
-    price: 89.90,
-    img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&q=80"
-  },
-  {
-    name: "Óculos Polarizado",
-    cat: "Acessórios",
-    price: 175.00,
-    old: 220.00,
-    badge: "sale",
-    img: "https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&q=80"
-  },
-];
+//variavel estatica
+let selecionado = "Todos";
 
-const cats = ["Todos", ...new Set(products.map(p => p.cat))];
-let active = "Todos";
+//pega o container (div) que os filters vão entrar
+const filtrosElement = document.getElementById("container-filters");
+const displayCards = document.getElementById("display-cards");
 
-const filtersEl = document.getElementById("filters");
-const gridEl = document.getElementById("grid");
+async function criaFilters() {
+  const categorias = await converteCategoriasJson();
 
-function fmt(value) {
-  return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-}
-
-async function testes(){
-
-  const teste = await carregarJson();
-  console.log(teste);
-}
-
-function renderFilters() {
-
-
-  filtersEl.innerHTML = cats.map(c =>
-    `<button class="chip${c === active ? " active" : ""}" data-cat="${c}">${c}</button>`
+  //vai criar a lista das categorias
+  filtrosElement.innerHTML = categorias.map(
+    categoria => `<button class="botao-categorias${categoria === selecionado ? " selecionado" : ""}" data-category="${categoria}">${categoria}</button>`
   ).join("");
 
-  filtersEl.querySelectorAll(".chip").forEach(btn => {
+  //pega todos os elementos que tem essa classe dentro do container
+  filtrosElement.querySelectorAll(".botao-categorias").forEach(btn => {
+
+    //ao receber um click o evento vai chamar novamente o cria filter e o rendergrig
     btn.addEventListener("click", () => {
-      active = btn.dataset.cat;
-      renderFilters();
-      renderGrid();
+
+      //vai selecionar o botao clicado
+      selecionado = btn.dataset.category;
+      criaFilters();
+      criaCards();
     });
   });
 }
 
-function renderGrid() {
-  const list = active === "Todos" ? products : products.filter(p => p.cat === active);
+async function criaCards() {
+  const listaProdutos = await carregarJson();
+  const list = selecionado === "Todos" ? listaProdutos : listaProdutos.filter(product => product.category === selecionado);
 
   if (!list.length) {
     gridEl.innerHTML = `<div class="empty">Nenhum produto encontrado.</div>`;
     return;
   }
 
-  gridEl.innerHTML = list.map(p => {
-    const discount = p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
-    const badgeHtml = p.badge === "sale"
-      ? `<span class="badge sale">-${discount}%</span>`
-      : p.badge === "new"
-        ? `<span class="badge new">Novo</span>`
-        : "";
-
+  displayCards.innerHTML = list.map(product => {
     return `
           <div class="card">
-            <div class="img-wrap">
-              <img src="${p.img}" alt="${p.name}" loading="lazy" />
+            <div class="image">
+              <img src="${product.img}" alt="${product.name}" loading="lazy" />
             </div>
             <div class="info">
-              <p class="cat">${p.cat}</p>
-              <p class="name">${p.name}</p>
+              <p class="category">${product.category}</p>
+              <p class="name">${product.name}</p>
               <div class="price-row">
-                <span class="price">${fmt(p.price)}</span>
+                <span class="price">${converteParaMoedaBr(product.price)}</span>
               </div>
             </div>
           </div>
@@ -136,7 +68,19 @@ function renderGrid() {
   }).join("");
 }
 
-testes();
-renderFilters();
-renderGrid();
+
+async function converteCategoriasJson() {
+  const recebeJson = await carregarJson();
+
+  const listaCategorias = ["Todos", ... new Set(recebeJson.map(product => product.category))];
+  return listaCategorias;
+}
+
+function converteParaMoedaBr(value) {
+  return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
+criaFilters();
+criaCards();
 carregarJson();
+converteCategoriasJson();
