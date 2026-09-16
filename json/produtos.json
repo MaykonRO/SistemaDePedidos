@@ -1,49 +1,49 @@
 [
   {
     "name": "Tênis Runner Pro",
-    "cat": "Calçados",
+    "category": "Calçados",
     "price": 289.90,
     "img": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80"
   },
   {
     "name": "Mochila Urban 20L",
-    "cat": "Acessórios",
+    "category": "Acessórios",
     "price": 159.00,
     "img": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80"
   },
   {
     "name": "Câmera Instant Mini",
-    "cat": "Eletrônicos",
+    "category": "Eletrônicos",
     "price": 449.00,
     "img": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80"
   },
   {
     "name": "Relógio Clássico",
-    "cat": "Acessórios",
+    "category": "Acessórios",
     "price": 320.00,
     "img": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80"
   },
   {
     "name": "Fone BT Studio",
-    "cat": "Eletrônicos",
+    "category": "Eletrônicos",
     "price": 199.90,
     "img": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80"
   },
   {
     "name": "Jaqueta Windbreaker",
-    "cat": "Roupas",
+    "category": "Roupas",
     "price": 259.00,
     "img": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80"
   },
   {
     "name": "Garrafa Térmica",
-    "cat": "Acessórios",
+    "category": "Acessórios",
     "price": 89.90,
     "img": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&q=80"
   },
   {
     "name": "Óculos Polarizado",
-    "cat": "Acessórios",
+    "category": "Acessórios",
     "price": 175.00,
     "img": "https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&q=80"
   }
