@@ -46,5 +46,11 @@
     "category": "Acessórios",
     "price": 175.00,
     "img": "https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&q=80"
+  },
+  {
+    "name": "Banana nanica",
+    "category": "Frutas",
+    "price": 5.00,
+    "img": "./img/bananas.jpg"
   }
 ]
