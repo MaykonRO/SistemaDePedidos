@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -7,10 +7,43 @@
     <title>Celular</title>
     <link rel="stylesheet" href="../css/navBarStyle.css">
     <link rel="stylesheet" href="../css/comunStyle.css">
+    <link rel="stylesheet" href="../css/formularioStyle.css">
 </head>
 
 <body>
     <div class="container">
+
+        <div class="card-form">
+            
+            <div class="row card-titulo">
+                <div class="icone-titulo">📱</div>
+                <div>
+                    <h1>Seu celular</h1>
+                </div>
+
+            </div>
+
+            <div class="description">
+                <p>Informe seu número de celular para receber o status do seu pedido.</p>
+            </div>
+
+            <label for="celular">Número de celular <b>*</b></label>
+            <input id="celular" class="caixa-texto" type="tel" placeholder="(11) 99999-9999">
+
+            <div class="actions">
+                <button type="button" class="back-button" id="btnVoltar" data-url="endereco.html">
+                    ← Voltar
+                </button>
+
+                <button type="button" class="continue-button" id="btnContinuar" data-url="pagamento.html">
+                    Forma de Pagamento →
+                </button>
+
+            </div>
+
+        </div>
+
+
         <div class="barra-inferior">
             <button class="botao-navegacao" type="button" id="btnHome" data-url="../index.html">
                 <img src="../img/icons/home.svg" alt="" srcset="" class="icons">
@@ -35,6 +68,7 @@
     </div>
 
     <script src="../js/navBarScript.js"></script>
+    <script src="../js/celularScript.js"></script>
 </body>
 
 </html>

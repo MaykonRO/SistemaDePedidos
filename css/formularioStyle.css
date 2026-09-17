@@ -1,8 +1,12 @@
 .container {
-  max-width: 850px;
+  width: 850px;
   height: auto;
   margin: 0 auto;
   align-content: center;
+}
+
+body {
+  display: flex;
 }
 
 .card-form {
@@ -86,7 +90,7 @@ label {
   outline: none;
   transition: 0.2s;
   resize: none;
-  font-family: inherit; 
+  font-family: inherit;
 }
 
 .caixa-texto-area:focus {
@@ -146,12 +150,12 @@ label {
            DUAS COLUNAS
 ========================= */
 
-.duas-colunas{
+.duas-colunas {
   display: flex;
   gap: 10px;
 }
 
-.duas-colunas .margin-b18{
+.duas-colunas .margin-b18 {
   width: 100%;
 }
 
@@ -193,4 +197,21 @@ label {
 
 .continue-button:hover {
   background-color: #206734;
+}
+
+@media (max-width: 850px) {
+  .container {
+    max-width: 850px;
+    width: auto;
+  }
+
+  .back-button {
+    font-size: 12px;
+  }
+
+  .continue-button {
+    font-size: 12px;
+  }
+
+
 }
