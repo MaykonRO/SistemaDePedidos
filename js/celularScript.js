@@ -26,4 +26,37 @@ function botoes() {
 
 }
 
+
+async function formataCelular() {
+    // 1. Seleciona o input do celular pelo ID
+    const inputCelular = document.getElementById('celular');
+
+    // 2. Fica escutando cada tecla digitada
+    inputCelular.addEventListener('input', (e) => {
+        // Remove tudo o que não for número
+        let valor = e.target.value.replace(/\D/g, '');
+
+        // Limita o tamanho máximo para 11 dígitos (DDD + 9 números do celular)
+        if (valor.length > 11) {
+            valor = valor.slice(0, 11);
+        }
+
+        // Aplica a formatação passo a passo conforme o tamanho cresce
+        if (valor.length > 7) {
+            // Formato final: (11) 98888-7777
+            valor = valor.replace(/^(\d{2})(\d{5})(\d+).*/, '($1) $2-$3');
+        } else if (valor.length > 2) {
+            // Formato intermediário enquanto digita o DDD: (11) 9888
+            valor = valor.replace(/^(\d{2})(\d+)/, '($1) $2');
+        } else if (valor.length > 0) {
+            // Formato inicial apenas com o DDD: (11
+            valor = valor.replace(/^(\d*)/, '($1');
+        }
+
+        // Devolve o valor formatado para o input
+        e.target.value = valor;
+    });
+}
+
+formataCelular();
 botoes();
