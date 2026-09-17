@@ -3,6 +3,8 @@ const inputNumero = document.getElementById('numero');
 const inputComplemento = document.getElementById('complemento');
 const inputBairro = document.getElementById('bairro');
 const inputCidade = document.getElementById('cidade');
+const btnVoltar = document.getElementById('btnVoltar');
+const btnContinuar = document.getElementById('btnContinuar');
 
 async function mascaraCep() {
     const inputCep = document.getElementById('cep');
@@ -64,5 +66,31 @@ async function pesquisarCep(cep) {
 
 }
 
+function botoes() {
+    btnContinuar.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Pega o data-url do botão específico que foi clicado
+        const destino = btnContinuar.dataset.url;
+
+        if (destino) {
+            window.location.href = destino;
+        }
+    });
+
+    btnVoltar.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Pega o data-url do botão específico que foi clicado
+        const destino = btnVoltar.dataset.url;
+
+        if (destino) {
+            window.location.href = destino;
+        }
+    });
+
+}
+
+botoes();
 mascaraCep();
 pegaCep();
