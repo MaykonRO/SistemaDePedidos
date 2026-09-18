@@ -43,10 +43,9 @@ async function formataCelular() {
 
         // Aplica a formatação passo a passo conforme o tamanho cresce
         if (valor.length > 7) {
-            // Formato final: (11) 98888-7777
             valor = valor.replace(/^(\d{2})(\d{5})(\d+).*/, '($1) $2-$3');
         } else if (valor.length > 2) {
-            // Formato intermediário enquanto digita o DDD: (11) 9888
+            // Formato intermediário 
             valor = valor.replace(/^(\d{2})(\d+)/, '($1) $2');
         } else if (valor.length > 0) {
             // Formato inicial apenas com o DDD: (11

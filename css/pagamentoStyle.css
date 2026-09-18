@@ -1,0 +1,10 @@
+.toast {
+  transition: opacity 0.3s ease-in-out;
+}
+.toast.oculto {
+  opacity: 0;
+  pointer-events: none;
+}
+.toast.visivel {
+  opacity: 1;
+}

@@ -7,10 +7,90 @@
     <title>Pagamento</title>
     <link rel="stylesheet" href="../css/navBarStyle.css">
     <link rel="stylesheet" href="../css/comunStyle.css">
+    <link rel="stylesheet" href="../css/formularioStyle.css">
+    <link rel="stylesheet" href="../css/pagamentoStyle.css">
 </head>
 
 <body>
     <div class="container">
+
+        <div class="card-form">
+            <div class="row card-titulo">
+                <div class="icone-titulo">💳</div>
+                <div>
+                    <h1>Forma de pagamento</h1>
+
+                </div>
+            </div>
+
+            <div class="description">
+                <p>Escolha a forma de pagamento que deseja utilizar.</p>
+            </div>
+
+
+            <form action="" method="get">
+                <div class="payment-methods-container">
+                    <h3>Escolha a(s) forma(s) de pagamento:</h3>
+
+                    <div id="toast-alerta" class="toast oculto"></div>
+
+                    <label class="payment-option">
+                        <div>
+                            <span class="payment-icon">💵</span>
+                            Dinheiro
+                        </div>
+                        <input type="checkbox" name="pagamento" value="dinheiro" />
+                    </label>
+
+                    <label class="payment-option">
+                        <div>
+                            <span class="payment-icon">💳</span>
+                            Débito
+                        </div>
+                        <input type="checkbox" name="pagamento" value="debito" />
+                    </label>
+
+                    <label class="payment-option">
+                        <div>
+                            <span class="payment-icon">💳</span>
+                            Crédito
+                        </div>
+                        <input type="checkbox" name="pagamento" value="credito" />
+                    </label>
+
+                    <label class="payment-option">
+                        <div>
+                            <span class="payment-icon">◆</span>
+                            PIX
+                        </div>
+                        <input type="checkbox" name="pagamento" value="pix" />
+                    </label>
+
+                    <label class="payment-option">
+                        <div>
+                            <span class="payment-icon">🍴</span>
+                            Voucher (Refeição/Alimentação)
+                        </div>
+                        <input type="checkbox" name="pagamento" value="voucher" />
+                    </label>
+
+                </div>
+            </form>
+
+
+            <!-- AÇÕES -->
+            <div class="actions">
+                <button type="button" class="back-button" id="btnVoltar" data-url="celular.html">
+                    ← Voltar
+                </button>
+
+                <button type="button" class="continue-button" id="btnContinuar" data-url="revisao.html">
+                    Concluir →
+                </button>
+
+            </div>
+        </div>
+
         <div class="barra-inferior">
             <button class="botao-navegacao" type="button" id="btnHome" data-url="../index.html">
                 <img src="../img/icons/home.svg" alt="" srcset="" class="icons">
@@ -34,6 +114,7 @@
         </div>
     </div>
     <script src="../js/navBarScript.js"></script>
+    <script src="../js/pagamentoScript.js"></script>
 </body>
 
 </html>
